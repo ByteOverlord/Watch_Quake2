@@ -521,28 +521,14 @@ void M_Menu_Main_f (void)
 	M_PushMenu (M_Main_Draw, M_Main_Key);
 }
 
-//#define CHEAT_ITEMS 2
-//static int m_cheats_cursor = 0;
-
 static menuframework_s s_cheats_menu;
 static menuaction_s s_cheats_giveall_action;
 static menuaction_s s_cheats_invulnerable_action;
+static menuaction_s s_cheats_notarget_action;
+static menuaction_s s_cheats_noclip_action;
 
 void M_Cheats_Draw (void)
 {
-    /*const char* cheatNames[] = {
-        "Give All",
-        "Invulnerable",
-        0
-    };
-    int xoffset = 120;
-    int ystart = 100;
-    for (int i=0; cheatNames[i] != NULL; i++)
-    {
-        M_DrawCustomLabel(xoffset,ystart + i * 32 + 13 + 8,cheatNames[i]);
-    }
-
-    M_DrawCursor( xoffset - 25, ystart + m_cheats_cursor * 32 + 11, (int)(cls.realtime / 100)%NUM_CURSOR_FRAMES );*/
     M_Banner( "m_banner_cheats" );
     
     Menu_AdjustCursor( &s_cheats_menu, 1 );
@@ -551,44 +537,6 @@ void M_Cheats_Draw (void)
 
 const char *M_Cheats_Key (int key)
 {
-    /*const char *sound = menu_move_sound;
-
-    switch (key)
-    {
-    case K_ESCAPE:
-        M_PopMenu ();
-        break;
-
-    case K_KP_DOWNARROW:
-    case K_DOWNARROW:
-        if (++m_cheats_cursor >= CHEAT_ITEMS)
-            m_cheats_cursor = 0;
-        return sound;
-
-    case K_KP_UPARROW:
-    case K_UPARROW:
-        if (--m_cheats_cursor < 0)
-            m_cheats_cursor = CHEAT_ITEMS - 1;
-        return sound;
-
-    case K_KP_ENTER:
-    case K_ENTER:
-        if (m_cheats_cursor < CHEAT_ITEMS)
-        {
-            const char* cheatsTxt[] = {
-                "give all",
-                "god",
-                0
-            };
-            Cmd_ExecuteString(cheatsTxt[m_cheats_cursor]);
-            return sound;
-        }
-        break;
-    default:
-        break;
-    }
-
-    return NULL;*/
     return Default_MenuKey( &s_cheats_menu, key );
 }
 
@@ -600,6 +548,16 @@ static void Cheat_InvulnerableFunc(void *unused)
 static void Cheat_GiveallFunc(void *unused)
 {
     Cmd_ExecuteString("give all");
+}
+
+static void Cheat_NotargetFunc(void *unused)
+{
+    Cmd_ExecuteString("notarget");
+}
+
+static void Cheat_NoclipFunc(void *unused)
+{
+    Cmd_ExecuteString("noclip");
 }
 
 void M_Menu_Cheats_Init(void)
@@ -619,23 +577,22 @@ void M_Menu_Cheats_Init(void)
     s_cheats_giveall_action.generic.name    = "Give All";
     s_cheats_giveall_action.generic.callback = Cheat_GiveallFunc;
 
-    /*s_cheats_mapselect_action.generic.type = MTYPE_SPINCONTROL;
-    s_cheats_mapselect_action.generic.x        = 0;
-    s_cheats_mapselect_action.generic.y        = 20;
-    s_cheats_mapselect_action.generic.name    = "Map select";
-    s_cheats_mapselect_action.generic.callback = Cheat_MapSelectFunc;
-    s_cheats_mapselect_action.itemnames = levelNames;
-    
-    s_cheats_mapload_action.generic.type    = MTYPE_ACTION;
-    s_cheats_mapload_action.generic.x        = 0;
-    s_cheats_mapload_action.generic.y        = 30;
-    s_cheats_mapload_action.generic.name    = "Load map";
-    s_cheats_mapload_action.generic.callback = Cheat_LoadMapFunc;*/
+    s_cheats_notarget_action.generic.type    = MTYPE_ACTION;
+    s_cheats_notarget_action.generic.x        = 0;
+    s_cheats_notarget_action.generic.y        = 20;
+    s_cheats_notarget_action.generic.name    = "No Target";
+    s_cheats_notarget_action.generic.callback = Cheat_NotargetFunc;
+
+    s_cheats_noclip_action.generic.type    = MTYPE_ACTION;
+    s_cheats_noclip_action.generic.x        = 0;
+    s_cheats_noclip_action.generic.y        = 30;
+    s_cheats_noclip_action.generic.name    = "No Clip";
+    s_cheats_noclip_action.generic.callback = Cheat_NoclipFunc;
 
     Menu_AddItem(&s_cheats_menu,&s_cheats_invulnerable_action);
     Menu_AddItem(&s_cheats_menu,&s_cheats_giveall_action);
-    //Menu_AddItem(&s_cheats_menu,&s_cheats_mapselect_action);
-    //Menu_AddItem(&s_cheats_menu,&s_cheats_mapload_action);
+    Menu_AddItem(&s_cheats_menu,&s_cheats_notarget_action);
+    Menu_AddItem(&s_cheats_menu,&s_cheats_noclip_action);
 
     Menu_SetStatusBar( &s_cheats_menu, NULL );
     Menu_Center( &s_cheats_menu );
@@ -654,19 +611,6 @@ static menuaction_s s_maps_mapload_action;
 
 void M_Maps_Draw (void)
 {
-    /*const char* cheatNames[] = {
-        "Give All",
-        "Invulnerable",
-        0
-    };
-    int xoffset = 120;
-    int ystart = 100;
-    for (int i=0; cheatNames[i] != NULL; i++)
-    {
-        M_DrawCustomLabel(xoffset,ystart + i * 32 + 13 + 8,cheatNames[i]);
-    }
-
-    M_DrawCursor( xoffset - 25, ystart + m_cheats_cursor * 32 + 11, (int)(cls.realtime / 100)%NUM_CURSOR_FRAMES );*/
     M_Banner( "m_banner_maps" );
     
     Menu_AdjustCursor( &s_maps_menu, 1 );
@@ -675,44 +619,6 @@ void M_Maps_Draw (void)
 
 const char *M_Maps_Key (int key)
 {
-    /*const char *sound = menu_move_sound;
-
-    switch (key)
-    {
-    case K_ESCAPE:
-        M_PopMenu ();
-        break;
-
-    case K_KP_DOWNARROW:
-    case K_DOWNARROW:
-        if (++m_cheats_cursor >= CHEAT_ITEMS)
-            m_cheats_cursor = 0;
-        return sound;
-
-    case K_KP_UPARROW:
-    case K_UPARROW:
-        if (--m_cheats_cursor < 0)
-            m_cheats_cursor = CHEAT_ITEMS - 1;
-        return sound;
-
-    case K_KP_ENTER:
-    case K_ENTER:
-        if (m_cheats_cursor < CHEAT_ITEMS)
-        {
-            const char* cheatsTxt[] = {
-                "give all",
-                "god",
-                0
-            };
-            Cmd_ExecuteString(cheatsTxt[m_cheats_cursor]);
-            return sound;
-        }
-        break;
-    default:
-        break;
-    }
-
-    return NULL;*/
     return Default_MenuKey( &s_maps_menu, key );
 }
 
