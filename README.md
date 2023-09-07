@@ -57,7 +57,7 @@ Quake 1 for Apple Watch https://github.com/ByteOverlord/Watch_Quake 18.11.2022
 
 ## <a name="features"></a>Features
 
-* PAK0, PAK1 and PAK2 loading
+* pak0, pak1 and pak2 loading
 * Menu screen
 * Save and load game
 * Autosaving of options
@@ -84,9 +84,9 @@ Quake 1 for Apple Watch https://github.com/ByteOverlord/Watch_Quake 18.11.2022
 Complete game with optional video and music takes ~ 403,4 MB on the watch.
 
 ```
-PAK0.PAK is 184 MB
-PAK1.PAK is 13 MB
-PAK2.PAK is 45 KB
+pak0.pak is 184 MB
+pak1.pak is 13 MB
+pak2.pak is 45 KB
 Video Files 163,7 MB
 Music Tracks are 38,7 MB (converted with Audacity (Mono, 22050 Hz, WAV, IMA ADPCM))
 ```
@@ -220,7 +220,7 @@ brew install innoextract
 (innoextract will extract an “app” and "tmp" folders in current working directory.)	
 "app" folder has the needed PAK files (app/baseq2/), optional video (app/baseq2/video/) and optional audio (app/music/).
 
-8) Copy PAK0.PAK, PAK1.PAK and PAK2.PAK to WatchQuake2 project (PAK names have to be uppercase (case sensitive))  
+8) Copy pak0.pak, pak1.pak and pak2.pak to WatchQuake2 project (pak names have to be lowercase (case sensitive))  
 
 `/WatchQuake2 Watch App/Resources/baseq2/`
 
