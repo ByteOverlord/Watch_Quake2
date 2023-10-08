@@ -74,10 +74,14 @@ Quake 1 for Apple Watch https://github.com/ByteOverlord/Watch_Quake 18.11.2022
 
 ## <a name="changelog"></a>Changelog
 
-**06.09.2023**
+**08.10.2023**
 
-* **<em>Cheats added to the menu (noclip and notarget)</em>**
-* **<em>Menu graphics updated (pak3.pak)</em>**
+* **<em>Game view position fixed for watchOS 10</em>**
+
+<em>06.09.2023</em>
+
+* <em>Cheats added to the menu (noclip and notarget)</em>
+* <em>Menu graphics updated (pak3.pak)</em>
 
 ## <a name="size"></a>Game size 
  
