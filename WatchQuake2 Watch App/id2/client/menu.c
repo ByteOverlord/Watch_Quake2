@@ -79,7 +79,8 @@ static void M_Banner( char *name )
 	int w, h;
 
 	re.DrawGetPicSize (&w, &h, name );
-	re.DrawPic( viddef.width / 2 - w / 2, viddef.height / 2 - 110, name );
+	//re.DrawPic( viddef.width / 2 - w / 2, viddef.height / 2 - 110, name );
+    re.DrawPic( viddef.width / 2 - w / 2, viddef.height / 2 - 140, name );
 }
 
 void M_PushMenu ( void (*draw) (void), const char *(*key) (int k) )
@@ -116,8 +117,17 @@ void M_PushMenu ( void (*draw) (void), const char *(*key) (int k) )
 	cls.key_dest = key_menu;
 }
 
+static int s_maps_active = 0;
+
+void WQOnMapsNavigate(void);
+
 void M_ForceMenuOff (void)
 {
+    if (s_maps_active)
+    {
+        s_maps_active = 0;
+        WQOnMapsNavigate();
+    }
 	m_drawfunc = 0;
 	m_keyfunc = 0;
 	cls.key_dest = key_game;
@@ -126,8 +136,16 @@ void M_ForceMenuOff (void)
 	Cvar_Set ("paused", "0");
 }
 
+void M_Maps_Draw (void);
+
+
 void M_PopMenu (void)
 {
+    if (s_maps_active)
+    {
+        s_maps_active = 0;
+        WQOnMapsNavigate();
+    }
 	S_StartLocalSound( menu_out_sound );
 	if (m_menudepth < 1)
 		Com_Error (ERR_FATAL, "M_PopMenu: depth < 1");
@@ -523,9 +541,13 @@ void M_Menu_Main_f (void)
 
 static menuframework_s s_cheats_menu;
 static menuaction_s s_cheats_giveall_action;
-static menuaction_s s_cheats_invulnerable_action;
-static menuaction_s s_cheats_notarget_action;
-static menuaction_s s_cheats_noclip_action;
+static menulist_s s_cheats_invulnerable_box;
+static menulist_s s_cheats_notarget_box;
+static menulist_s s_cheats_noclip_box;
+
+#include "g_local.h"
+#include "local_lib.h"
+extern struct edict_s *sv_player;
 
 void M_Cheats_Draw (void)
 {
@@ -542,7 +564,11 @@ const char *M_Cheats_Key (int key)
 
 static void Cheat_InvulnerableFunc(void *unused)
 {
-    Cmd_ExecuteString("god");
+    int flag = sv_player ? (sv_player->flags & FL_GODMODE ? 1 : 0) : 0;
+    if (s_cheats_invulnerable_box.curvalue != flag)
+    {
+        Cmd_ExecuteString("god");
+    }
 }
 
 static void Cheat_GiveallFunc(void *unused)
@@ -552,24 +578,47 @@ static void Cheat_GiveallFunc(void *unused)
 
 static void Cheat_NotargetFunc(void *unused)
 {
-    Cmd_ExecuteString("notarget");
+    int flag = sv_player ? (sv_player->flags & FL_NOTARGET ? 1 : 0) : 0;
+    if (s_cheats_notarget_box.curvalue != flag)
+    {
+        Cmd_ExecuteString("notarget");
+    }
 }
 
 static void Cheat_NoclipFunc(void *unused)
 {
-    Cmd_ExecuteString("noclip");
+    int flag = sv_player ? (sv_player->movetype == MOVETYPE_NOCLIP ? 1 : 0) : 0;
+    if (s_cheats_noclip_box.curvalue != flag)
+    {
+        Cmd_ExecuteString("noclip");
+    }
+}
+
+void Cheats_Init(void)
+{
+    s_cheats_invulnerable_box.curvalue = sv_player ? (sv_player->flags & FL_GODMODE ? 1 : 0) : 0;
+    s_cheats_notarget_box.curvalue = sv_player ? (sv_player->flags & FL_NOTARGET ? 1 : 0) : 0;
+    s_cheats_noclip_box.curvalue = sv_player ? (sv_player->movetype == MOVETYPE_NOCLIP ? 1 : 0) : 0;
 }
 
 void M_Menu_Cheats_Init(void)
 {
+    static const char *yesno_names[] =
+    {
+        "no",
+        "yes",
+        0
+    };
+    
     s_cheats_menu.x = viddef.width * 0.50;// - 64;
     s_cheats_menu.nitems = 0;
 
-    s_cheats_invulnerable_action.generic.type    = MTYPE_ACTION;
-    s_cheats_invulnerable_action.generic.x        = 0;
-    s_cheats_invulnerable_action.generic.y        = 0;
-    s_cheats_invulnerable_action.generic.name    = "Invulnerable";
-    s_cheats_invulnerable_action.generic.callback = Cheat_InvulnerableFunc;
+    s_cheats_invulnerable_box.generic.type    = MTYPE_SPINCONTROL;
+    s_cheats_invulnerable_box.generic.x        = 0;
+    s_cheats_invulnerable_box.generic.y        = 0;
+    s_cheats_invulnerable_box.generic.name    = "Invulnerable";
+    s_cheats_invulnerable_box.generic.callback = Cheat_InvulnerableFunc;
+    s_cheats_invulnerable_box.itemnames = yesno_names;
 
     s_cheats_giveall_action.generic.type    = MTYPE_ACTION;
     s_cheats_giveall_action.generic.x        = 0;
@@ -577,22 +626,26 @@ void M_Menu_Cheats_Init(void)
     s_cheats_giveall_action.generic.name    = "Give All";
     s_cheats_giveall_action.generic.callback = Cheat_GiveallFunc;
 
-    s_cheats_notarget_action.generic.type    = MTYPE_ACTION;
-    s_cheats_notarget_action.generic.x        = 0;
-    s_cheats_notarget_action.generic.y        = 20;
-    s_cheats_notarget_action.generic.name    = "No Target";
-    s_cheats_notarget_action.generic.callback = Cheat_NotargetFunc;
+    s_cheats_notarget_box.generic.type    = MTYPE_SPINCONTROL;
+    s_cheats_notarget_box.generic.x        = 0;
+    s_cheats_notarget_box.generic.y        = 20;
+    s_cheats_notarget_box.generic.name    = "No Target";
+    s_cheats_notarget_box.generic.callback = Cheat_NotargetFunc;
+    s_cheats_notarget_box.itemnames = yesno_names;
 
-    s_cheats_noclip_action.generic.type    = MTYPE_ACTION;
-    s_cheats_noclip_action.generic.x        = 0;
-    s_cheats_noclip_action.generic.y        = 30;
-    s_cheats_noclip_action.generic.name    = "No Clip";
-    s_cheats_noclip_action.generic.callback = Cheat_NoclipFunc;
+    s_cheats_noclip_box.generic.type    = MTYPE_SPINCONTROL;
+    s_cheats_noclip_box.generic.x        = 0;
+    s_cheats_noclip_box.generic.y        = 30;
+    s_cheats_noclip_box.generic.name    = "No Clip";
+    s_cheats_noclip_box.generic.callback = Cheat_NoclipFunc;
+    s_cheats_noclip_box.itemnames = yesno_names;
 
-    Menu_AddItem(&s_cheats_menu,&s_cheats_invulnerable_action);
+    Menu_AddItem(&s_cheats_menu,&s_cheats_invulnerable_box);
     Menu_AddItem(&s_cheats_menu,&s_cheats_giveall_action);
-    Menu_AddItem(&s_cheats_menu,&s_cheats_notarget_action);
-    Menu_AddItem(&s_cheats_menu,&s_cheats_noclip_action);
+    Menu_AddItem(&s_cheats_menu,&s_cheats_notarget_box);
+    Menu_AddItem(&s_cheats_menu,&s_cheats_noclip_box);
+    
+    Cheats_Init();
 
     Menu_SetStatusBar( &s_cheats_menu, NULL );
     Menu_Center( &s_cheats_menu );
@@ -671,6 +724,7 @@ void SV_Map (qboolean attractloop, char *levelstring, qboolean loadgame);
 
 static void Map_MapSelectFunc( void *unused )
 {
+    WQOnMapsNavigate();
     //s_cheats_mapselect_action.curvalue
 }
 
@@ -691,6 +745,18 @@ static void Map_LoadMapFunc(void* unused)
     //cls.key_dest = key_game;
 }
 
+int M_IsInMapSelect(void)
+{
+    return s_maps_active;
+}
+
+const char* M_GetSelectedMapName(void)
+{
+    return levelNames[s_maps_mapselect_action.curvalue];
+}
+
+static int s_maps_init = 1;
+
 void M_Menu_Maps_Init(void)
 {
     s_maps_menu.x = viddef.width * 0.50;// - 64;
@@ -698,21 +764,26 @@ void M_Menu_Maps_Init(void)
 
     s_maps_mapselect_action.generic.type = MTYPE_SPINCONTROL;
     s_maps_mapselect_action.generic.x        = 0;
-    s_maps_mapselect_action.generic.y        = 20;
+    s_maps_mapselect_action.generic.y        = -150;
     s_maps_mapselect_action.generic.name    = "Map select";
     s_maps_mapselect_action.generic.callback = Map_MapSelectFunc;
     s_maps_mapselect_action.itemnames = levelNames;
+    if (s_maps_init)
+    {
+        s_maps_mapselect_action.curvalue = 0;
+        s_maps_init = 0;
+    }
 
     s_maps_skillselect_action.generic.type = MTYPE_SPINCONTROL;
     s_maps_skillselect_action.generic.x        = 0;
-    s_maps_skillselect_action.generic.y        = 30;
+    s_maps_skillselect_action.generic.y        = -140;
     s_maps_skillselect_action.generic.name    = "Skill select";
     s_maps_skillselect_action.generic.callback = Map_SkillSelectFunc;
     s_maps_skillselect_action.itemnames = skillNames;
     
     s_maps_mapload_action.generic.type    = MTYPE_ACTION;
     s_maps_mapload_action.generic.x        = 0;
-    s_maps_mapload_action.generic.y        = 40;
+    s_maps_mapload_action.generic.y        = -130;
     s_maps_mapload_action.generic.name    = "Load map";
     s_maps_mapload_action.generic.callback = Map_LoadMapFunc;
 
@@ -728,6 +799,8 @@ void M_Menu_Maps_f (void)
 {
     M_Menu_Maps_Init();
     M_PushMenu(M_Maps_Draw,M_Maps_Key);
+    s_maps_active = 1;
+    WQOnMapsNavigate();
 }
 
 /*

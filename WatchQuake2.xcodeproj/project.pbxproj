@@ -12,6 +12,7 @@
 		6A6B18C02AA100D0001EAF1B /* g_tbl_movs.c in Sources */ = {isa = PBXBuildFile; fileRef = 6A6B18BF2AA100D0001EAF1B /* g_tbl_movs.c */; };
 		6A8882A42940ED3D00026E2B /* sound_watch.c in Sources */ = {isa = PBXBuildFile; fileRef = 6A8882A32940ED3D00026E2B /* sound_watch.c */; };
 		6A8882A72940F04300026E2B /* cd_watch.c in Sources */ = {isa = PBXBuildFile; fileRef = 6A8882A52940F04300026E2B /* cd_watch.c */; };
+		6A8DAE7A2AD47DD200EB6975 /* mapselect in Resources */ = {isa = PBXBuildFile; fileRef = 6A8DAE792AD47DD200EB6975 /* mapselect */; };
 		6A9B72A32AA36FE200729EE5 /* g_save_common.c in Sources */ = {isa = PBXBuildFile; fileRef = 6A9B72A22AA36FE200729EE5 /* g_save_common.c */; };
 		6AB18DC22940FDE100B6DA3C /* WQ2SoundCallback.c in Sources */ = {isa = PBXBuildFile; fileRef = 6AB18DC12940FDE100B6DA3C /* WQ2SoundCallback.c */; };
 		6ABABF6C293200DC006E7734 /* WatchQuake2 Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 6ABABF6B293200DC006E7734 /* WatchQuake2 Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -22,12 +23,6 @@
 		6ABABF8929320664006E7734 /* sys_watch.c in Sources */ = {isa = PBXBuildFile; fileRef = 6ABABF8829320664006E7734 /* sys_watch.c */; };
 		6ABABF8B29320C23006E7734 /* Quake2Wrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 6ABABF8A29320C23006E7734 /* Quake2Wrapper.m */; };
 		6ABABF8F29320CE7006E7734 /* WQ2Common.c in Sources */ = {isa = PBXBuildFile; fileRef = 6ABABF8E29320CE7006E7734 /* WQ2Common.c */; };
-		6ABABF9229320ECA006E7734 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6ABABF9129320ECA006E7734 /* AVFoundation.framework */; };
-		6ABABF9429320ED2006E7734 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6ABABF9329320ED2006E7734 /* CoreGraphics.framework */; };
-		6ABABF9629320ED9006E7734 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6ABABF9529320ED9006E7734 /* Foundation.framework */; };
-		6ABABF9829320EEB006E7734 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6ABABF9729320EEB006E7734 /* SwiftUI.framework */; };
-		6ABABF9A29320EF7006E7734 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6ABABF9929320EF7006E7734 /* UIKit.framework */; };
-		6ABABF9C29320EFF006E7734 /* WatchKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6ABABF9B29320EFF006E7734 /* WatchKit.framework */; };
 		6ABABFA12932100E006E7734 /* Threading.c in Sources */ = {isa = PBXBuildFile; fileRef = 6ABABF9E2932100E006E7734 /* Threading.c */; };
 		6ABABFA22932100E006E7734 /* Threading.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6ABABF9F2932100E006E7734 /* Threading.cpp */; };
 		6ABABFA4293212CE006E7734 /* baseq2 in Resources */ = {isa = PBXBuildFile; fileRef = 6ABABFA3293212CE006E7734 /* baseq2 */; };
@@ -179,6 +174,7 @@
 		6A8882A32940ED3D00026E2B /* sound_watch.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = sound_watch.c; sourceTree = "<group>"; };
 		6A8882A52940F04300026E2B /* cd_watch.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cd_watch.c; sourceTree = "<group>"; };
 		6A8882A62940F04300026E2B /* cd_watch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cd_watch.h; sourceTree = "<group>"; };
+		6A8DAE792AD47DD200EB6975 /* mapselect */ = {isa = PBXFileReference; lastKnownFileType = folder; path = mapselect; sourceTree = "<group>"; };
 		6A9B72A12AA36FE200729EE5 /* g_save_common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = g_save_common.h; sourceTree = "<group>"; };
 		6A9B72A22AA36FE200729EE5 /* g_save_common.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = g_save_common.c; sourceTree = "<group>"; };
 		6AB18DC02940FDE100B6DA3C /* WQ2SoundCallback.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WQ2SoundCallback.h; sourceTree = "<group>"; };
@@ -196,12 +192,6 @@
 		6ABABF8C29320C3C006E7734 /* Quake2Wrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Quake2Wrapper.h; sourceTree = "<group>"; };
 		6ABABF8D29320CE7006E7734 /* WQ2Common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WQ2Common.h; sourceTree = "<group>"; };
 		6ABABF8E29320CE7006E7734 /* WQ2Common.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = WQ2Common.c; sourceTree = "<group>"; };
-		6ABABF9129320ECA006E7734 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS9.1.sdk/System/Library/Frameworks/AVFoundation.framework; sourceTree = DEVELOPER_DIR; };
-		6ABABF9329320ED2006E7734 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS9.1.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
-		6ABABF9529320ED9006E7734 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS9.1.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		6ABABF9729320EEB006E7734 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS9.1.sdk/System/Library/Frameworks/SwiftUI.framework; sourceTree = DEVELOPER_DIR; };
-		6ABABF9929320EF7006E7734 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS9.1.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
-		6ABABF9B29320EFF006E7734 /* WatchKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WatchKit.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS9.1.sdk/System/Library/Frameworks/WatchKit.framework; sourceTree = DEVELOPER_DIR; };
 		6ABABF9D2932100E006E7734 /* Threading.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Threading.h; sourceTree = "<group>"; };
 		6ABABF9E2932100E006E7734 /* Threading.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Threading.c; sourceTree = "<group>"; };
 		6ABABF9F2932100E006E7734 /* Threading.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Threading.cpp; sourceTree = "<group>"; };
@@ -376,12 +366,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6ABABF9229320ECA006E7734 /* AVFoundation.framework in Frameworks */,
-				6ABABF9429320ED2006E7734 /* CoreGraphics.framework in Frameworks */,
-				6ABABF9629320ED9006E7734 /* Foundation.framework in Frameworks */,
-				6ABABF9829320EEB006E7734 /* SwiftUI.framework in Frameworks */,
-				6ABABF9A29320EF7006E7734 /* UIKit.framework in Frameworks */,
-				6ABABF9C29320EFF006E7734 /* WatchKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -393,7 +377,6 @@
 			children = (
 				6ABABF6F293200DC006E7734 /* WatchQuake2 Watch App */,
 				6ABABF66293200DC006E7734 /* Products */,
-				6ABABF9029320ECA006E7734 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -460,22 +443,10 @@
 		6ABABF8529320430006E7734 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				6A8DAE792AD47DD200EB6975 /* mapselect */,
 				6ABABFA3293212CE006E7734 /* baseq2 */,
 			);
 			path = Resources;
-			sourceTree = "<group>";
-		};
-		6ABABF9029320ECA006E7734 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				6ABABF9B29320EFF006E7734 /* WatchKit.framework */,
-				6ABABF9929320EF7006E7734 /* UIKit.framework */,
-				6ABABF9729320EEB006E7734 /* SwiftUI.framework */,
-				6ABABF9529320ED9006E7734 /* Foundation.framework */,
-				6ABABF9329320ED2006E7734 /* CoreGraphics.framework */,
-				6ABABF9129320ECA006E7734 /* AVFoundation.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		6ABABFA5293213F8006E7734 /* id2 */ = {
@@ -788,6 +759,7 @@
 				6ABABFA4293212CE006E7734 /* baseq2 in Resources */,
 				6ABABF78293200DD006E7734 /* Preview Assets.xcassets in Resources */,
 				6ABABF75293200DD006E7734 /* Assets.xcassets in Resources */,
+				6A8DAE7A2AD47DD200EB6975 /* mapselect in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1067,7 +1039,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = ge.WatchQuake2.app.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = ge.WatchQuake2.main.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -1101,7 +1073,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = ge.WatchQuake2.app.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = ge.WatchQuake2.main.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -1123,7 +1095,7 @@
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_KEY_CFBundleDisplayName = WatchQuake2;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = ge.WatchQuake2.app;
+				PRODUCT_BUNDLE_IDENTIFIER = ge.WatchQuake2.main;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.0;
@@ -1139,7 +1111,7 @@
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_KEY_CFBundleDisplayName = WatchQuake2;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = ge.WatchQuake2.app;
+				PRODUCT_BUNDLE_IDENTIFIER = ge.WatchQuake2.main;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.0;

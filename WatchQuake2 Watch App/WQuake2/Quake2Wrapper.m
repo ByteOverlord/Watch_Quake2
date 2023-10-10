@@ -1384,3 +1384,22 @@ void WQSetAudioFormat(int Hz, uint bits, int channels, int interleaved, int type
 
     CDAudio_SetMixerSamplerate(Hz);
 }
+
+void refresh_mapselect(void*);
+
+void WQOnMapsNavigate(void)
+{
+    dispatch_async_f(dispatch_get_main_queue(),NULL,refresh_mapselect);
+}
+
+int M_IsInMapSelect(void);
+const char* M_GetSelectedMapName(void);
+
+const char* WQGetSelectedMapName(void)
+{
+    if (M_IsInMapSelect())
+    {
+        return M_GetSelectedMapName();
+    }
+    return 0;
+}

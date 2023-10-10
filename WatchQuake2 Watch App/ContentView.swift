@@ -9,10 +9,12 @@ import SwiftUI
 import UIKit
 
 class Model : ObservableObject {
+    @Published var mapTxt : String!
     @Published var txt = String("")
     @Published var benchmarkTxt = String("")
     @Published var img : CGImage!
     init() {
+        mapTxt = nil
         img = nil
         txt = String("")
         benchmarkTxt = String("")
@@ -35,6 +37,17 @@ func refreshScreen(ptr: UnsafeRawPointer) -> () {
     }
 }
 
+@_cdecl("refresh_mapselect")
+func refreshMapselect(ptr: UnsafeRawPointer) -> () {
+    let mapName = WQGetSelectedMapName()
+    if mapName == nil {
+        myModel.mapTxt = nil
+    }
+    else {
+        myModel.mapTxt = String(cString: mapName!)
+    }
+}
+
 struct ImageOverlay: View {
     @ObservedObject var model: Model
     init() {
@@ -43,6 +56,34 @@ struct ImageOverlay: View {
     var body: some View {
         Text(model.txt).font(.system(size: 6)).fixedSize().padding(Edge.Set(Edge.top), Double(-8.0))
         Text(model.benchmarkTxt).font(.system(size: 6)).fixedSize().padding(Edge.Set(Edge.top), Double(8.0))
+    }
+}
+
+struct MapsOverlay: View {
+    @ObservedObject var model: Model
+    init() {
+        model = myModel
+    }
+    var body: some View {
+        if model.mapTxt != nil
+        {
+            let stats = WQGetStats()
+            let gif = UIImage(named: String("mapselect/") + model.mapTxt + String(".gif"), in: Bundle.main, with: nil)
+            if gif != nil {
+                let scaleX = 256.0 / Double(stats.devPixelsPerDot)
+                let scaleY = 246.0 / Double(stats.devPixelsPerDot)
+                let offsetY = Double(8.0 / stats.devPixelsPerDot)
+                Image.init(uiImage: gif!).resizable().scaledToFit().frame(width: scaleX, height: scaleY).padding(Edge.Set(Edge.bottom), offsetY)
+            }
+        }
+    }
+}
+
+struct NullView: View {
+    init() {
+    }
+    var body: some View {
+        Text("").frame(width: 0, height: 0)
     }
 }
 
@@ -63,6 +104,7 @@ struct ContentView: View {
             //let offset = CGSize(width: 0.0, height: 128.0)
             Image.init(model.img, scale: Double(scale), label: Text("Game"))
                 //.scaledToFit()
+                .overlay(MapsOverlay(), alignment: .bottom)
                 .overlay(ImageOverlay(), alignment: .top)
         }
     }

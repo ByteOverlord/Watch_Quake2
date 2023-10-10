@@ -78,4 +78,6 @@ void WQInputCrownRotate(float f, float delta);
 int WQGetFrameBufferLength(void);
 void WQSetAudioFormat(int Hz, uint bits, int channels, int interleaved, int type);
 
+const char* WQGetSelectedMapName(void);
+
 #endif /* Quake2Wrapper_h */
